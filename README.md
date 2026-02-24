@@ -133,20 +133,3 @@ git clone https://github.com/hunghayhoc/<tên-repo>.git
 *(Hoặc tự đăng ký tài khoản mới trong ứng dụng)*
 
 
-## 👨‍💻 Nhóm Phát Triển
-
-**Nhóm 6 – 74DCTT21**
-
-| Thành viên |
-|---|
-| Hoàng Hải Hưng |
-| Thẩm Đức Trung |
-| Phạm Trung Kiên |
-| Nguyễn Ngọc Quang Minh |
-| Nguyễn Minh Phong |
-
----
-
-## 📄 Giấy Phép
-
-Dự án học thuật – phục vụ mục đích học tập và nghiên cứu.
