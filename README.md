@@ -1,18 +1,12 @@
-# 🎓 Hệ Thống Nhận Diện & Điểm Danh Bằng Khuôn Mặt
+# 📚 App Đọc Truyện – Android
 
-> Ứng dụng AI tự động nhận diện khuôn mặt để điểm danh học sinh/sinh viên trong lớp học hoặc nhân viên trong doanh nghiệp — thay thế hoàn toàn phương pháp thủ công.
+> Ứng dụng đọc truyện trên Android được xây dựng bằng Java, tích hợp SQLite để lưu trữ dữ liệu nội bộ, hỗ trợ phân quyền người dùng và quản trị viên.
 
 ---
 
 ## 📌 Giới Thiệu
 
-Dự án được xây dựng nhằm ứng dụng **Machine Learning vào phần mềm thực tế**, thể hiện khả năng kết hợp thị giác máy tính (Computer Vision), xử lý ảnh và giao diện người dùng trong một hệ thống hoàn chỉnh.
-
-Hệ thống có thể:
-- Nhận diện khuôn mặt theo thời gian thực qua webcam
-- Tự động ghi nhận điểm danh vào cơ sở dữ liệu
-- Quản lý danh sách học sinh / nhân viên
-- Hỗ trợ ứng dụng trong game AI, NPC behavior và computer vision
+Dự án Android native được phát triển bởi **Nhóm 6 – 74DCTT21**, thể hiện khả năng xây dựng ứng dụng di động hoàn chỉnh với đầy đủ luồng người dùng: từ đăng ký, đăng nhập, đọc truyện, đánh giá, yêu thích cho đến quản trị nội dung (Admin).
 
 ---
 
@@ -20,91 +14,139 @@ Hệ thống có thể:
 
 | Thành phần | Công nghệ |
 |---|---|
-| Ngôn ngữ lập trình | C# (.NET Framework) |
-| Xử lý ảnh | OpenCV thông qua EmguCV |
-| Thuật toán AI | Haar Cascade Classifier + LBPH (Local Binary Patterns Histograms) |
-| Cơ sở dữ liệu | SQL Server |
-| Giao diện | Webcam API + LINQ |
+| Ngôn ngữ | Java |
+| Nền tảng | Android (API 21+) |
+| Cơ sở dữ liệu | SQLite (local) |
+| Load ảnh | Picasso |
+| UI Navigation | BottomNavigationView + SNavigationDrawer |
+| Danh sách | RecyclerView (GridLayout, LinearLayout) |
+| Hiệu ứng banner | ViewFlipper + Animation |
+| IDE | Android Studio |
 
 ---
 
-## ✨ Tính Năng Chính
+## ✨ Tính Năng
 
-- 📷 **Nhận diện khuôn mặt theo thời gian thực** qua webcam
-- 🤖 **Thuật toán LBPH** — nhận diện chính xác ngay cả khi ánh sáng thay đổi
-- 🗃️ **Quản lý dữ liệu** — thêm, sửa, xoá học sinh / nhân viên
-- 📊 **Lưu trữ điểm danh** vào SQL Server với timestamp
-- 🖥️ **Giao diện thân thiện** — dễ sử dụng, hiển thị trực tiếp trên màn hình
+### 👤 Người Dùng
+- 🔐 **Đăng ký / Đăng nhập / Đăng xuất** — xác thực bằng SQLite
+- 🏠 **Màn hình chính** — banner quảng cáo tự động (ViewFlipper), danh sách truyện mới & nổi bật
+- 📖 **Xem nội dung truyện** — cuộn nội dung dài với ScrollingMovementMethod
+- 🔍 **Tìm kiếm truyện** — lọc theo tên theo thời gian thực (TextWatcher)
+- ❤️ **Yêu thích** — lưu và xem danh sách truyện yêu thích (GridLayout 2 cột)
+- 📋 **Tất cả truyện** — duyệt toàn bộ danh sách
+- ⭐ **Đánh giá truyện** — viết và xem đánh giá
+- 📧 **Chia sẻ qua Email** — gửi truyện bằng Intent email
+- ℹ️ **Thông tin ứng dụng** — giới thiệu nhóm phát triển
+
+### 🛡️ Quản Trị Viên (Admin – Phân quyền 2)
+- ➕ **Đăng bài** — thêm truyện mới (tiêu đề, nội dung, ảnh URL)
+- ✏️ **Cập nhật truyện** — chỉnh sửa thông tin truyện đã đăng
+- 🗑️ **Xóa truyện** — xóa qua Dialog xác nhận
 
 ---
 
-## 🚀 Cài Đặt & Chạy Dự Án
+## 🗃️ Cơ Sở Dữ Liệu (SQLite)
 
-### Yêu cầu hệ thống
-
-- Visual Studio 2019 trở lên
-- .NET Framework 4.7+
-- SQL Server (LocalDB hoặc đầy đủ)
-- Webcam
-
-### Các bước cài đặt
-
-```bash
-# 1. Clone repository
-git clone https://github.com/hunghayhoc/hethongdiemdanhtudong.git
-
-# 2. Mở solution trong Visual Studio
-# Mở file .sln
-
-# 3. Cài đặt NuGet packages
-# EmguCV, EntityFramework (tự động qua NuGet Restore)
-
-# 4. Cấu hình chuỗi kết nối SQL Server trong App.config
-# <connectionStrings>
-#   <add name="..." connectionString="Data Source=...;Initial Catalog=DiemDanhDB;..." />
-# </connectionStrings>
-
-# 5. Chạy SQL script để tạo database (trong thư mục /Database)
-
-# 6. Build & Run
-```
+| Bảng | Mô tả |
+|---|---|
+| `TaiKhoan` | Tài khoản người dùng (tên, mật khẩu, email, phân quyền) |
+| `Truyen` | Truyện (tên, nội dung, ảnh, id tài khoản) |
+| `DanhGia` | Đánh giá truyện (nội dung, tên tài khoản, tên truyện) |
+| `YeuThich` | Danh sách truyện yêu thích theo tài khoản |
 
 ---
 
 ## 📁 Cấu Trúc Dự Án
 
 ```
-hethongdiemdanhtudong/
-├── FaceRecognition/
-│   ├── Forms/              # Giao diện người dùng
-│   ├── Models/             # Các lớp dữ liệu
-│   ├── Services/           # Logic nhận diện khuôn mặt
-│   └── HaarCascade/        # File XML cho Haar Cascade
-├── Database/
-│   └── script.sql          # Script khởi tạo database
-└── README.md
+appdoctruyen_v2/
+├── adapter/
+│   ├── adapterTruyen.java          # Adapter danh sách truyện (tìm kiếm, tất cả)
+│   ├── adapterTruyenV2.java        # Adapter dạng lưới (trang chủ)
+│   ├── adapterTruyenYeuThich.java  # Adapter yêu thích (long-click để bỏ yêu thích)
+│   ├── adapterDangBai.java         # Adapter Admin (xóa, cập nhật)
+│   ├── DanhGiaAdapter.java         # Adapter danh sách đánh giá
+│   ├── adapterchuyenmuc.java       # Adapter chuyên mục
+│   ├── adapterthongtin.java        # Adapter thông tin tài khoản
+│   └── ViewPagerAdapter.java       # Adapter ViewPager (Home + Account)
+│
+├── database/
+│   └── databasedoctruyen.java      # SQLiteOpenHelper – toàn bộ CRUD
+│
+├── model/
+│   ├── Truyen.java                 # Model truyện
+│   ├── TaiKhoan.java               # Model tài khoản
+│   ├── DanhGia.java                # Model đánh giá
+│   ├── chuyenmuc.java              # Model chuyên mục
+│   └── main/
+│       ├── MainAdmin.java          # Màn hình quản trị
+│       ├── MainWait.java           # Splash screen (3 giây)
+│       └── MainThongTin.java       # Thông tin ứng dụng
+│
+├── MainActivity.java               # Màn hình chính – Navigation Drawer + Bottom Nav
+├── MainDangNhap.java               # Đăng nhập
+├── MainDangKy.java                 # Đăng ký
+├── MainDangBai.java                # Đăng bài (Admin)
+├── MainCapNhat.java                # Cập nhật truyện (Admin)
+├── MainNoiDungTruyen.java          # Đọc nội dung truyện
+├── MainTimKiem.java                # Tìm kiếm
+├── MainDanhGia.java                # Viết đánh giá
+├── MainXemDanhGia.java             # Xem đánh giá
+├── MainChiaSe.java                 # Chia sẻ qua email
+├── HomeFragment.java               # Fragment trang chủ
+├── DangBaiFragment.java            # Fragment đăng bài
+├── YeuThichFragment.java           # Fragment yêu thích
+├── TatcatruyenFragment.java        # Fragment tất cả truyện
+├── AccountFragmment.java           # Fragment tài khoản
+└── thongtinappFragment.java        # Fragment thông tin app
 ```
 
 ---
 
-## 📸 Demo
+## 🚀 Cài Đặt & Chạy
 
-> *(Thêm ảnh chụp màn hình hoặc GIF demo tại đây)*
+### Yêu cầu
+- Android Studio Flamingo trở lên
+- Android SDK API 21+
+- Kết nối internet (để load ảnh bìa truyện qua Picasso)
+
+### Các bước
+
+```bash
+# 1. Clone repository
+git clone https://github.com/hunghayhoc/<tên-repo>.git
+
+# 2. Mở bằng Android Studio
+# File → Open → chọn thư mục dự án
+
+# 3. Sync Gradle để tải dependencies
+
+# 4. Chạy trên máy ảo hoặc thiết bị thật (API 21+)
+```
+
+### Tài khoản thử nghiệm
+| Loại | Tài khoản | Mật khẩu |
+|---|---|---|
+| Người dùng | `user` | `123` |
+| Quản trị viên | `admin` | `123` |
+
+*(Hoặc tự đăng ký tài khoản mới trong ứng dụng)*
+
+
+## 👨‍💻 Nhóm Phát Triển
+
+**Nhóm 6 – 74DCTT21**
+
+| Thành viên |
+|---|
+| Hoàng Hải Hưng |
+| Thẩm Đức Trung |
+| Phạm Trung Kiên |
+| Nguyễn Ngọc Quang Minh |
+| Nguyễn Minh Phong |
 
 ---
 
-## 🧠 Thuật Toán
+## 📄 Giấy Phép
 
-Dự án sử dụng **2 bước chính**:
-
-1. **Haar Cascade Classifier** — phát hiện vị trí khuôn mặt trong khung hình
-2. **LBPH (Local Binary Patterns Histograms)** — nhận diện danh tính từ khuôn mặt đã phát hiện
-
----
-
-## 👨‍💻 Tác Giả
-
-**Hưng Hay Học**
-- GitHub: [@hunghayhoc](https://github.com/hunghayhoc)
-
----
+Dự án học thuật – phục vụ mục đích học tập và nghiên cứu.
