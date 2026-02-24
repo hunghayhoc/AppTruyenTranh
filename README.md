@@ -6,7 +6,7 @@
 
 ## 📌 Giới Thiệu
 
-Dự án Android native được phát triển bởi **Nhóm 6 – 74DCTT21**, thể hiện khả năng xây dựng ứng dụng di động hoàn chỉnh với đầy đủ luồng người dùng: từ đăng ký, đăng nhập, đọc truyện, đánh giá, yêu thích cho đến quản trị nội dung (Admin).
+Dự án Android native thể hiện khả năng xây dựng ứng dụng di động hoàn chỉnh với đầy đủ luồng người dùng: từ đăng ký, đăng nhập, đọc truyện, đánh giá, yêu thích cho đến quản trị nội dung (Admin).
 
 ---
 
